@@ -29,7 +29,7 @@ function ContactButton() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="cosmic-nav-status cursor-pointer select-none transition-colors duration-150"
+        className="cosmic-nav-status contact-architect-btn cursor-pointer select-none transition-colors duration-150"
         style={open ? { borderColor: "rgba(192,64,255,0.6)", color: "var(--color-amber-300)" } : undefined}
         aria-expanded={open}
         aria-haspopup="true"

@@ -207,6 +207,89 @@ textarea:disabled,
   text-transform: uppercase;
 }
 
+@keyframes contact-button-twinkle {
+  0% {
+    box-shadow: 0 0 10px rgba(192, 64, 255, 0.2), 0 0 2px rgba(64, 216, 255, 0.15);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(64, 216, 255, 0.4), 0 0 24px rgba(192, 64, 255, 0.35);
+    filter: brightness(1.08);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(192, 64, 255, 0.25), 0 0 8px rgba(64, 216, 255, 0.28);
+    filter: brightness(1.03);
+  }
+}
+
+@keyframes contact-button-rainbow-outline {
+  0% {
+    outline-color: #ff4fd8;
+    box-shadow:
+      0 0 0 2px rgba(255, 79, 216, 0.75),
+      0 0 14px rgba(255, 79, 216, 0.55),
+      0 0 26px rgba(255, 79, 216, 0.35);
+  }
+  20% {
+    outline-color: #7f7bff;
+    box-shadow:
+      0 0 0 2px rgba(127, 123, 255, 0.75),
+      0 0 14px rgba(127, 123, 255, 0.55),
+      0 0 26px rgba(127, 123, 255, 0.35);
+  }
+  40% {
+    outline-color: #40d8ff;
+    box-shadow:
+      0 0 0 2px rgba(64, 216, 255, 0.75),
+      0 0 14px rgba(64, 216, 255, 0.55),
+      0 0 26px rgba(64, 216, 255, 0.35);
+  }
+  60% {
+    outline-color: #5cff9b;
+    box-shadow:
+      0 0 0 2px rgba(92, 255, 155, 0.75),
+      0 0 14px rgba(92, 255, 155, 0.55),
+      0 0 26px rgba(92, 255, 155, 0.35);
+  }
+  80% {
+    outline-color: #ffe066;
+    box-shadow:
+      0 0 0 2px rgba(255, 224, 102, 0.75),
+      0 0 14px rgba(255, 224, 102, 0.55),
+      0 0 26px rgba(255, 224, 102, 0.35);
+  }
+  100% {
+    outline-color: #ff7a5c;
+    box-shadow:
+      0 0 0 2px rgba(255, 122, 92, 0.75),
+      0 0 14px rgba(255, 122, 92, 0.55),
+      0 0 26px rgba(255, 122, 92, 0.35);
+  }
+}
+
+.contact-architect-btn {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    outline-color 180ms ease,
+    box-shadow 220ms ease,
+    transform 180ms ease;
+}
+
+.contact-architect-btn:hover,
+.contact-architect-btn:focus-visible {
+  border-color: rgba(64, 216, 255, 0.55);
+  color: var(--color-amber-300);
+  background: linear-gradient(135deg, rgba(14, 0, 48, 0.9) 0%, rgba(0, 112, 144, 0.18) 100%);
+  transform: translateY(-1px);
+  animation:
+    contact-button-twinkle 1.05s ease-in-out infinite,
+    contact-button-rainbow-outline 2.2s linear infinite;
+}
+
 @media (max-width: 640px) {
   html,
   body {
