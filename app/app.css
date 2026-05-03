@@ -1,15 +1,397 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-mono: "Special Elite", "Courier New", monospace;
+
+  /* Deep cosmic purple void */
+  --color-ink-950: #040010;
+  --color-ink-900: #08001d;
+  --color-ink-800: #0e0030;
+  --color-ink-700: #180048;
+  --color-ink-600: #240060;
+
+  /* Soft lavender-white starlight text */
+  --color-parchment-50:  #fdf4ff;
+  --color-parchment-100: #f0e4ff;
+  --color-parchment-200: #d8c4ff;
+  --color-parchment-300: #c2a6e6;
+  --color-parchment-400: #9572bf;
+
+  /* Violet/magenta accent — the dominant star colour */
+  --color-amber-300: #e090ff;
+  --color-amber-400: #c040ff;
+  --color-amber-500: #8800cc;
+  --color-amber-600: #5c0088;
+
+  /* Cyan accent — the bright icy star highlights */
+  --color-sepia-400: #40d8ff;
+  --color-sepia-500: #00a8c8;
+  --color-sepia-600: #007090;
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+html, body {
+  background-color: var(--color-ink-950);
+  color: var(--color-parchment-100);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='2.4' fill='%23f0e4ff'/%3E%3Cpath d='M10 1.4L11.8 6.7L17.4 6.7L12.9 10L14.7 15.2L10 11.9L5.3 15.2L7.1 10L2.6 6.7L8.2 6.7Z' fill='none' stroke='%2340d8ff' stroke-width='1.3' stroke-linejoin='round'/%3E%3C/svg%3E") 10 10, auto;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+a,
+button:not(:disabled),
+[role="button"],
+summary,
+label[for],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+select,
+.cursor-pointer,
+[onclick] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M3.4 21.6L12.2 15.4' stroke='%23c040ff' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M1.8 24.1L10.8 18.8' stroke='%2340d8ff' stroke-width='1.2' stroke-linecap='round' opacity='0.9'/%3E%3Cpath d='M5.2 19.2L14 14.1' stroke='%23f0e4ff' stroke-width='1.1' stroke-linecap='round' opacity='0.75'/%3E%3Cpath d='M13.9 13.9L18.2 12.8L17.1 17.1L21.2 21.2L16.9 22.3L15.8 26.6L11.7 22.5L7.4 23.6L8.5 19.3L4.4 15.2L8.7 14.1L9.8 9.8Z' fill='%23f0e4ff' stroke='%2340d8ff' stroke-width='1.1' stroke-linejoin='round'/%3E%3Ccircle cx='18.1' cy='12.1' r='1.6' fill='%23c040ff'/%3E%3C/svg%3E") 16 16, pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Cosmic starfield with warm moon-glow at centre */
+.starfield {
+  position: relative;
+  background-color: var(--color-ink-950);
+  background-image: url("/starfield.gif.gif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.starfield::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 0, 16, 0.58) 0%,
+    rgba(4, 0, 16, 0.4) 45%,
+    rgba(4, 0, 16, 0.62) 100%
+  );
+  z-index: 0;
+}
+
+.starfield > * {
+  position: relative;
+  z-index: 1;
+}
+
+.starfield-archive {
+  background-image: url("/starfield 2.gif");
+}
+
+.starfield-detail {
+  background-image: url("/starfield 3.gif");
+}
+
+.cosmic-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  padding-top: 1rem;
+}
+
+.cosmic-nav-shell {
+  border: 1px solid rgba(192, 64, 255, 0.28);
+  background:
+    linear-gradient(135deg, rgba(4, 0, 16, 0.92) 0%, rgba(14, 0, 48, 0.86) 55%, rgba(0, 112, 144, 0.18) 100%);
+  box-shadow:
+    0 12px 40px rgba(4, 0, 16, 0.4),
+    inset 0 0 0 1px rgba(64, 216, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.cosmic-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--color-parchment-100);
+  text-decoration: none;
+}
+
+.cosmic-brand-logo {
+  height: 4rem;
+  width: auto;
+  opacity: 0.92;
+  filter:
+    drop-shadow(0 0 10px rgba(64, 216, 255, 0.25))
+    drop-shadow(0 0 18px rgba(192, 64, 255, 0.22));
+}
+
+/* Star-twinkle animation for the right nav logo */
+@keyframes star-twinkle {
+  0%   { opacity: 0.85; filter: drop-shadow(0 0 6px rgba(64,216,255,0.30)) drop-shadow(0 0 14px rgba(192,64,255,0.25)) brightness(1); transform: scale(1); }
+  20%  { opacity: 1;    filter: drop-shadow(0 0 16px rgba(64,216,255,0.70)) drop-shadow(0 0 32px rgba(192,64,255,0.55)) brightness(1.18); transform: scale(1.04); }
+  35%  { opacity: 0.78; filter: drop-shadow(0 0 4px rgba(64,216,255,0.15)) drop-shadow(0 0 8px rgba(192,64,255,0.12)) brightness(0.92); transform: scale(0.98); }
+  55%  { opacity: 1;    filter: drop-shadow(0 0 22px rgba(192,64,255,0.80)) drop-shadow(0 0 40px rgba(64,216,255,0.45)) brightness(1.22); transform: scale(1.06); }
+  70%  { opacity: 0.88; filter: drop-shadow(0 0 8px rgba(64,216,255,0.30)) drop-shadow(0 0 18px rgba(192,64,255,0.25)) brightness(1); transform: scale(1); }
+  85%  { opacity: 1;    filter: drop-shadow(0 0 14px rgba(64,216,255,0.55)) drop-shadow(0 0 28px rgba(192,64,255,0.45)) brightness(1.12); transform: scale(1.03); }
+  100% { opacity: 0.85; filter: drop-shadow(0 0 6px rgba(64,216,255,0.30)) drop-shadow(0 0 14px rgba(192,64,255,0.25)) brightness(1); transform: scale(1); }
+}
+
+.logo-twinkle {
+  animation: star-twinkle 3.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.yk-logo {
+  height: 6rem;
+  width: auto;
+  opacity: 0.82;
+}
+
+.cosmic-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(192, 64, 255, 0.22);
+  color: var(--color-parchment-200);
+  background: rgba(8, 0, 29, 0.6);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cosmic-nav-link:hover {
+  border-color: rgba(64, 216, 255, 0.45);
+  color: var(--color-parchment-100);
+  background: rgba(14, 0, 48, 0.9);
+  box-shadow: 0 0 24px rgba(64, 216, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.cosmic-nav-link-active {
+  border-color: rgba(64, 216, 255, 0.5);
+  color: var(--color-ink-900);
+  background: linear-gradient(135deg, var(--color-sepia-400) 0%, var(--color-amber-300) 100%);
+  box-shadow: 0 0 24px rgba(64, 216, 255, 0.2);
+}
+
+.cosmic-nav-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(64, 216, 255, 0.24);
+  background: rgba(4, 0, 16, 0.48);
+  color: var(--color-sepia-400);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    font-size: 16px;
   }
+
+  .text-xs {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .stamp {
+    letter-spacing: 0.075em;
+  }
+
+  .cosmic-nav-link {
+    min-width: 6.2rem;
+    padding: 0.66rem 0.82rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+  }
+
+  .cosmic-nav-status {
+    padding: 0.62rem 0.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  input[type="text"],
+  input[type="search"],
+  textarea,
+  select,
+  button {
+    font-size: 0.92rem;
+  }
+
+  .cosmic-brand-logo,
+  .yk-logo {
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .cosmic-nav {
+    padding-top: 0.7rem;
+  }
+
+  .cosmic-nav-shell {
+    padding: 0.62rem 0.6rem;
+  }
+
+  .cosmic-brand {
+    gap: 0.55rem;
+  }
+
+  .cosmic-brand .serif {
+    font-size: 0.95rem;
+  }
+
+  .cosmic-brand-logo,
+  .yk-logo {
+    height: 2.2rem;
+  }
+
+  .cosmic-nav-link {
+    min-width: 5.3rem;
+    padding: 0.56rem 0.62rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+  }
+
+  .cosmic-nav-status {
+    padding: 0.52rem 0.62rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+  }
+
+  .stamp {
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 390px) {
+  .archive-search-form {
+    gap: 0.5rem;
+  }
+
+  .archive-query-wrap {
+    min-width: 100%;
+  }
+
+  .archive-action-btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    justify-content: center;
+    text-align: center;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .archive-action-btn-random {
+    flex-basis: 100%;
+  }
+
+  .archive-sort-filter {
+    justify-content: flex-start;
+    gap: 0.35rem 0.5rem;
+  }
+
+  .archive-control-label {
+    min-width: 3.6rem;
+    font-size: 0.74rem;
+  }
+
+  .archive-control-select {
+    flex: 1 1 calc(100% - 4.2rem);
+    min-width: 0;
+    font-size: 0.82rem;
+  }
+}
+
+/* Sacred geometry ring — used as decorative orbital */
+.sacred-ring {
+  border-radius: 50%;
+  border: 1px solid rgba(232, 152, 48, 0.25);
+  box-shadow:
+    0 0 0 8px rgba(232, 152, 48, 0.05),
+    inset 0 0 40px rgba(232, 152, 48, 0.04);
+}
+
+/* Moon glow orb — the large circle from the artwork */
+.moon-glow {
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(200, 220, 255, 0.12) 0%,
+    rgba(160, 190, 230, 0.07) 35%,
+    rgba(100, 140, 200, 0.03) 65%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 60px 20px rgba(180, 200, 240, 0.06),
+    0 0 120px 40px rgba(140, 170, 220, 0.04),
+    inset 0 0 60px rgba(200, 220, 255, 0.05);
+  border: 1px solid rgba(200, 220, 255, 0.12);
+}
+
+/* Fire glow — matches the amber orbs held by the figure */
+.fire-glow {
+  box-shadow:
+    0 0 20px 4px rgba(232, 152, 48, 0.5),
+    0 0 50px 10px rgba(232, 120, 20, 0.25),
+    0 0 100px 20px rgba(180, 80, 10, 0.12);
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+/* ── Cosmic skeleton shimmer ── */
+@keyframes cosmic-shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-ink-800) 0%,
+    rgba(192, 64, 255, 0.08) 30%,
+    rgba(64, 216, 255, 0.10) 50%,
+    rgba(192, 64, 255, 0.08) 70%,
+    var(--color-ink-800) 100%
+  );
+  background-size: 800px 100%;
+  animation: cosmic-shimmer 3.2s linear infinite;
+  border: 1px solid var(--color-ink-700);
 }
